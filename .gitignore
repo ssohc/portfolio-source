@@ -1,0 +1,4 @@
+assets/*.txt
+locked.html
+site/
+.DS_Store
