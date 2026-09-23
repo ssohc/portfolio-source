@@ -430,7 +430,7 @@
 
       <div class="facts" style="margin-top:24px;">
         <div><b>팀 구성</b>Lead PM 1(본인) · PM 1 · UI/UX 디자이너 2</div>
-        <div><b>역할</b>포털기획팀 팀장 · 프로덕트 기획 총괄 · 이용약관/개인정보처리방침 작성</div>
+        <div><b>역할</b>포털기획팀 팀장 · 프로덕트 기획 총괄</div>
       </div>
 
       
@@ -832,7 +832,7 @@
 
   async function grab(name){
     if(cache[name]) return cache[name];
-    var res=await fetch('assets/'+name+'.pdf.txt',{cache:'force-cache'});
+    var res=await fetch('assets/'+name+'.pdf.txt',{cache:'no-cache'});
     if(!res.ok) throw new Error('fetch');
     var raw=atob((await res.text()).trim()), buf=new Uint8Array(raw.length);
     for(var i=0;i<raw.length;i++) buf[i]=raw.charCodeAt(i);
@@ -854,8 +854,8 @@
           await dl.save({filename:btn.dataset.name,data:blob});
         }else{
           var url=URL.createObjectURL(blob);
-          var w=window.open(url,'_blank');
-          if(!w){ var a=document.createElement('a'); a.href=url; a.download=btn.dataset.name; a.click(); }
+          var a=document.createElement('a'); a.href=url; a.download=btn.dataset.name;
+          document.body.appendChild(a); a.click(); a.remove();
           setTimeout(function(){ URL.revokeObjectURL(url); },60000);
         }
       }catch(e){
